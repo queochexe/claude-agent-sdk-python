@@ -265,6 +265,46 @@ See [src/claude_agent_sdk/_errors.py](src/claude_agent_sdk/_errors.py) for all e
 
 See the [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code/settings#tools-available-to-claude) for a complete list of available tools.
 
+## Project Manager Agent
+
+The SDK includes an AI-powered Project Manager Agent that automates comprehensive project planning. Based on the [GenAI_Agents repository](https://github.com/NirDiamant/GenAI_Agents) by NirDiamant.
+
+**Features:**
+- 📋 **Task Extraction** - Breaks down project descriptions into actionable tasks
+- 🔗 **Dependency Mapping** - Identifies task relationships and blockers
+- 📅 **Optimized Scheduling** - Creates timelines with parallel execution
+- 👥 **Team Allocation** - Assigns tasks based on expertise
+- ⚠️ **Risk Assessment** - Evaluates and scores project risks
+- 🔄 **Iterative Optimization** - Self-refines plans to minimize risk
+
+### Quick Example
+
+```python
+from claude_agent_sdk.pm_agent import ProjectManager, Team, TeamMember
+
+pm = ProjectManager()
+
+team = Team(members=[
+    TeamMember(name="Alice", profile="Backend Developer with Python expertise"),
+    TeamMember(name="Bob", profile="Frontend Developer, React specialist"),
+])
+
+plan = await pm.generate_plan(
+    project_description="Build a customer support chatbot with AI capabilities",
+    team=team,
+    max_iterations=3,
+    verbose=True
+)
+
+print(f"Tasks: {len(plan.tasks.tasks)}")
+print(f"Duration: {plan.schedule.get_project_duration()} days")
+print(f"Risk Score: {plan.risks.get_total_risk()}")
+```
+
+See [src/claude_agent_sdk/pm_agent/README.md](src/claude_agent_sdk/pm_agent/README.md) for comprehensive documentation, or run the examples:
+- `examples/pm_agent_example.py` - Basic usage
+- `examples/pm_agent_advanced.py` - Advanced scenarios
+
 ## Examples
 
 See [examples/quick_start.py](examples/quick_start.py) for a complete working example.
